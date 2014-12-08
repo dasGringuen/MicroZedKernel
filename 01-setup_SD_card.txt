@@ -1,0 +1,125 @@
+Linux and toolchain setup guide on the MicroZedBoard - Adrian Remonda 2014
+
+
+~$ means your pc
+target$ the MicroZed
+
+Setup sd card:
+--------------
+
+Debian image I have prepare that boots fast (this is convenient when you are  doing some kernel hacking).
+Download it and flash it in the SD card with the “dd ” command. 
+
+Download:
+6c6297b22fc71387da560a27ed55c0ba  debian-small.img
+https://www.dropbox.com/s/76dzekcpdub7pot/debian-small.img?dl=0
+
+# compressed file
+https://www.dropbox.com/s/fhpkdzlel790qbc/debian-small.img.tar.gz?dl=0
+83366926e00c5f9e78ee620d52a43359  debian-small.img.tar.gz
+
+#uncompress
+tar -zxvf debian-small.img.tar.gz 
+
+Check that you have the next checksum with the md5sum command.
+Should get : 6c6297b22fc71387da560a27ed55c0ba  debian-small.img
+
+With the command lsblk you can check to witch driver is the SD card (/dev/sdX)
+
+$host: lsblk
+$host: export DISK=/dev/sdXXX -> be carefull!!
+$host: sudo dd if=/dev/zero of=${DISK} bs=1M count=20        -> be carefull!!
+time sudo dd if=debian-minimal.img of=${DISK}                -> be carefull!!
+
+Boot the Debian image
+-----------------------
+Set the jumpers to boot from the SD card:
+    JMP1 = "1"
+    JMP2 = "0"
+    JMP3 = "0"
+
+Connect the MicroZed with the SD card and s
+    Insert SD Card into MicroZed. Connect MicroZed to the host with USB
+    Serial port cable and RJ45 cable. Reboot MicroZed board (press RST).
+
+3)  check to witch driver is your serial port connected in the host
+host$ ls /dev/tty*
+        should get something like ttyUSB0 
+               
+4) host$ sudo minicom -s
+        configure with 115200 no hardware and using the previous device
+
+5) You should get a promt with a log.
+    Restart the board and you should see the kernel logs
+
+Setup ethernet connection
+------------------------
+
+Setup an static ip address in your pc
+--------------------------------------
+we have to set up an static ip address. If you want to setup permanently you must 
+set it in /etc/network/interfaces (write me if you have troubles)
+(we can also setup a dhcp server but it is a bit slower).
+The debian image has an static ip address (192.168.1.103) as a first step you can just 
+do as next in your desktop in order to connect. 
+
+host$: ifconfig eth0 192.168.1.103
+host$: ifconfig eth0 up
+host$: ifconfig
+
+# the with ping
+host$: ping 192.168.1.103
+
+# connect with ssh
+ssh root@192.168.1.103
+
+pw: root
+
+        Toolchain
+        -----------
+        
+We will be using the armhf (hardware floating point support)
+
+1)	The first step is to have a linux running in your MicroZed
+
+2)	The second is to crosscompile an user space program and run it in your board
+
+- Download/Extract:
+
+    $ cd
+    $ mkdir toolchains
+    $ cd toolchains
+    $ wget -c https://releases.linaro.org/14.09/components/toolchain/binaries/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.xz
+    $ tar xf gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.xz
+    $ export CC=~/toolchains/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf-
+    
+    or if you have added in the path in .bashrc
+    $ export CC=arm-linux-gnueabihf-
+
+- Test:
+
+    $ ${CC}gcc --version
+    arm-linux-gnueabihf-gcc (crosstool-NG linaro-1.13.1-4.9-2014.09 - Linaro GCC 4.9-2014.09) 4.9.2 20140904 (prerelease)
+    Copyright (C) 2014 Free Software Foundation, Inc.
+    This is free software; see the source for copying conditions.  There is NO
+    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
+-  To export it permanently
+    add the next at the end of ~/.bashrc
+    export PATH=~/toolchains/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH
+
+-   compile a hello world
+
+    $ ${CC}gcc main.c -o hello.elf
+
+
+copy the hello world in your board:
+---------------------------------
+
+copy the elf file in your board:
+host$ scp hello.elf root@192.168.1.103:/root
+host$ ssh root@192.168.1.103
+
+# now we are in the Zed
+target$ cd /root
+target$ ./hello.elf
