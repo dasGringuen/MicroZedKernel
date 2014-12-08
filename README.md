@@ -20,6 +20,9 @@ How to compile and install the Linux kernel in the MicroZedBoard
 Compile and run a Hello world module
 
   10-Hello_world_tutorial.txt
+  
+Sources and binaries
+====================
 
 Prebuild images of the bootloader, linux kernel and the device tree
 
