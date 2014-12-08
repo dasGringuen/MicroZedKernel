@@ -6,23 +6,31 @@ Microzed board kernel compile and modules
 Tutorials
 =========
 
-How to get the kernel sources for the Microzedboard
----------------------------------------------------
+Kernel sources
+--------------
 
+How to get the kernel sources for the Microzedboard
   01-Get_the_kernel_sources.txt
-  
-How to setup and run Debian in the MicroZedboard:  
----------------------------------------------------
+
+
+Debian
+------
+
+  How to setup and run Debian in the MicroZedboard:  
 
   02-setup_SD_card.txt
   
-How to compile and install the Linux kernel in the MicroZedBoard  
------------------------------------------------------------------
+Linux kernel
+------------
   
+How to compile and install the Linux kernel in the MicroZedBoard  
+
   03-linux-kernel.txt
   
+Hello world module
+-------------------
+
 Compile and run a Hello world module
-------------------------------------
 
   10-Hello_world_tutorial.txt
   
