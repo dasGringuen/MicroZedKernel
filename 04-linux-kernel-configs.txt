@@ -1,0 +1,24 @@
+Debugging information
+
+  │ Symbol: DEBUG_FS [=y]                                                   │  
+  │ Type  : boolean                                                         │  
+  │ Prompt: Debug Filesystem                                                │  
+  │   Location:                                                             │  
+  │     -> Kernel hacking                                                   │  
+  │ (1)   -> Compile-time checks and compiler options                       │  
+
+For dynamic debug
+
+CONFIG_DYNAMIC_DEBUG     
+
+  │ Symbol: DYNAMIC_DEBUG [=n]                                              │  
+  │ Type  : boolean                                                         │  
+  │ Prompt: Enable dynamic printk() support                                 │  
+  │   Location:                                                             │  
+  │     -> Kernel hacking                                                   │  
+  │ (1)   -> printk and dmesg options                                       │  
+  │   Defined at lib/Kconfig.debug:47                                       │  
+  │   Depends on: PRINTK [=y] && DEBUG_FS [=y]   
+  
+
+                                                 
