@@ -11,7 +11,15 @@ Prerequisites
         01-setup_SD_card.txt    
         
     Zedboard with a linux running, in this case xilinx 3.15
-        01-setup_SD_card.txt    
+        01-setup_SD_card.txt   
+
+In debian or ubuntu install the next packages:
+----------------------------------------------
+
+sudo apt-get install libncurses5-dev  
+sudo apt-get install device-tree-compiler
+sudo apt-get install u-boot-tools
+
 
 Set the compiler
 ----------------
@@ -27,7 +35,7 @@ Get the config file:
     
 		~/linux-xlnx$ make ARCH=arm CROSS_COMPILE=${CC} xilinx_zynq_defconfig
 		
-    Configure the kernel (works with the default)
+    Configure the kernel (works with the default configuration)
 		~/linux-xlnx$ make ARCH=arm CROSS_COMPILE=${CC} menuconfig
 			
 Device tree
@@ -93,7 +101,7 @@ sdb      8:16   1   3.7G  0 disk
 
 In this case, the partition were mounted in /media/usb0 and /media/usb1
     
-~$ export BOOT=/media/boot; export ROOTFS=/media/rootfs; 
+~$ export BOOT=/media/BOOT; export ROOTFS=/media/rootfs; 
 
 Optional do a backup first:
 
@@ -109,7 +117,7 @@ copy the files:
 In order to write in the rootfs we need to have root rights, and the ROOTFS variable was exported for the user.
 We write an script or just hardcoding the path to rootfs as next.
 
-~$ sudo make ARCH=arm modules_install INSTALL_MOD_PATH=/media/usb1
+~$ sudo make ARCH=arm modules_install INSTALL_MOD_PATH=$ROOTFS
 
 unmount:
 
@@ -121,30 +129,52 @@ Configure minicom with the right serial port path
 
 ~$ sudo minicom -s
     
-Should get the data of the just create kernel 
+Should get the logs of the just create kernel 
    
-uZed:~$ uname -a
-Linux arm 3.15.0-xilinx-00001-gc95b0382a8dc-dirty #5 SMP PREEMPT Mon Dec 8 11:26:26 ART 2014 armv7l GNU/Linux
+uZed:~# uname -a
+Linux arm 3.15.0-xilinx-dirty #1 SMP PREEMPT Wed Jan 28 04:43:28 EST 2015 armv7l GNU/Linux
+
+To check the modules, ipv6 should be loaded
+
+uZed:~# lsmod
+Module                  Size  Used by
+ipv6                  253614  12 
+
+
 
 
     Install over ssh
     =================
 
-
 Once we have a kernel runing is fast to update it over ssh
-Assuming that "boot" was mounted in /media/ZYNQ in the MicroZedboard debian and the ip of the board is 192.168.1.101
 
-~$ mkdir linux-xlnx-output
+    Mount "boot" partition
+    ----------------------
 
-Optional, create a backup:
+Skip this part if you have already mounted the boot partition in /mount/ZYNQ
 
-~$ ssh root@192.168.1.101 'mv /media/ZYNQ/uImage /media/ZYNQ/backup.$(date "+%y%m%d").uImage'
-~$ ssh root@192.168.1.101 'mv /media/ZYNQ/devicetree.dtb /media/ZYNQ/backup.$(date "+%y%m%d").deviceTree'
+To automatically mount the boot partition at boot time run the next command in the board:
+
+uZed$ echo "/dev/mmcblk0p1 /media/ZYNQ auto noatime 1 2" >> /etc/fstab
+
+    Copy the kernel into the MicroZed
+    ---------------------------------
+
+Assuming that "boot" was mounted in /media/ZYNQ in the MicroZedboard debian and the ip of the board is 192.168.1.103
+
+Optional, create a backup first:
+
+~$ ssh root@192.168.1.103 'mv /media/ZYNQ/uImage /media/ZYNQ/backup.$(date "+%y%m%d").uImage'
+~$ ssh root@192.168.1.103 'mv /media/ZYNQ/devicetree.dtb /media/ZYNQ/backup.$(date "+%y%m%d").deviceTree'
 
 Copy the uImage and the device tree.
 
-~$ scp -p arch/arm/boot/uImage root@192.168.1.101:/media/ZYNQ/
-~$ scp -p devicetree.dtb root@192.168.1.101:/media/ZYNQ/
+~$ scp -p arch/arm/boot/uImage root@192.168.1.103:/media/ZYNQ/
+~$ scp -p devicetree.dtb root@192.168.1.103:/media/ZYNQ/
+
+Reboot the board
+
+~$ ssh root@192.168.1.103 'sync; reboot'
 
     Install only one module 
     =======================
