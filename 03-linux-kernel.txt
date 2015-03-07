@@ -11,20 +11,19 @@ Prerequisites
         01-setup_SD_card.txt    
         
     Zedboard with a linux running, in this case xilinx 3.15
-        01-setup_SD_card.txt   
 
 In debian or ubuntu install the next packages:
 ----------------------------------------------
 
-sudo apt-get install libncurses5-dev  
-sudo apt-get install device-tree-compiler
-sudo apt-get install u-boot-tools
+    ~$ sudo dpkg --add-architecture i386
+    ~$ sudo apt-get update
+    ~$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
 
 
 Set the compiler
 ----------------
 
-		export CC=arm-linux-gnueabihf- 
+        export CC=arm-linux-gnueabihf- 
 		
 		check that is the linaro:
 		    ~$ ${CC}gcc --version

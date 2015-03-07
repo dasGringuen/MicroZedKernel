@@ -1,8 +1,9 @@
-Linux and toolchain setup guide on the MicroZedBoard - Adrian Remonda 2014
+SD card setup for the MicroZedBoard - Adrian Remonda 2014
 
+Prompt:
 
-~$ means your pc
-target$ the MicroZed
+    ~$ means your pc
+    microZed$ the MicroZed
 
 Setup sd card:
 --------------
