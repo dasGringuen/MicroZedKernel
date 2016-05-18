@@ -59,16 +59,15 @@ Then install crossbuild-essential-armhf
     sudo apt-get install crossbuild-essential-armhf
     
 
-## Crosscompile a user space program and run it in your board
+## Cross-compile and run it
 
 Compile a hello world
 
     ~$ ${CC}gcc main.c -o hello.elf
+    
 
-    copy the hello world in your board:
-    ---------------------------------
+Copy the hello world in your board:
 
-    copy the elf file in your board:
     ~$ scp hello.elf root@192.168.1.103:/root
     ~$ ssh root@192.168.1.103
 
