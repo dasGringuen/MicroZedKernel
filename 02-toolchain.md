@@ -1,19 +1,25 @@
-Toolchain setup for the MicroZedBoard - Adrian Remonda 2014
+Toolchain setup for the cross compiling
+=====================================
 
-Prompt:
+Tool chain setup for armhf (hardware floating point support)
 
-    ~$ means your pc
-    microZed$ the MicroZed
+Background
+----------
 
-Toolchain
------------
+https://wiki.debian.org/ArmHardFloatPort
+
+
+Toolchain from Linaro
+---------------------
         
-We will be using the armhf (hardware floating point support)
+
 
 - In debian or Ubuntu install the next packages:
 
     ~$ sudo dpkg --add-architecture i386
+    
     ~$ sudo apt-get update
+    
     ~$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
 
 1)	The first step is to have a linux running in your MicroZed
@@ -21,7 +27,7 @@ We will be using the armhf (hardware floating point support)
 - Download/Extract:
 
     ~$ cd
-    ~$ mkdir toolchains
+	~$ mkdir toolchains
     ~$ cd toolchains
     ~$ wget -c https://releases.linaro.org/14.09/components/toolchain/binaries/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.xz
     ~$ tar xf gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.xz
@@ -63,10 +69,7 @@ We will be using the armhf (hardware floating point support)
 Optinal use the toolchain from the package manager
 =================================================
 
-Background
-----------
 
-https://wiki.debian.org/ArmHardFloatPort
 
 Install armhf compiler on Debian
 --------------------------
