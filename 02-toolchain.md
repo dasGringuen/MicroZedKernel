@@ -17,8 +17,8 @@ Toolchain from Linaro
 - In debian or Ubuntu install the next packages:
 
     ~$ sudo dpkg --add-architecture i386
-    ~$ sudo apt-get update
-    ~$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386
+    ~$ sudo apt-get update 
+    ~$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
 
 1) The first step is to have a linux running in your MicroZed
 
