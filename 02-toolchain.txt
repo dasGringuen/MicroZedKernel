@@ -58,3 +58,45 @@ We will be using the armhf (hardware floating point support)
     microZed# now we are in the Zed
     microZed# cd /root
     microZed# ./hello.elf
+    
+    
+Optinal use the toolchain from the package manager
+=================================================
+
+Background
+----------
+
+https://wiki.debian.org/ArmHardFloatPort
+
+Install armhf compiler on Debian
+--------------------------
+
+- Sources:
+    
+    https://wiki.debian.org/CrossToolchains
+
+
+- These packages did not make it into Jessie so you need to install them from the 
+  Debian Cross-toolchains repository. Create /etc/apt/sources.list.d/crosstools.list containing:
+
+    deb http://emdebian.org/tools/debian/ jessie main
+
+- You will need the archive key installed
+
+    curl http://emdebian.org/tools/debian/emdebian-toolchain-archive.key | sudo apt-key add -
+
+- Then install crossbuild-essential-armhf
+
+    sudo dpkg --add-architecture armhf
+    sudo apt-get update
+    sudo apt-get install crossbuild-essential-armhf
+    
+    
+To test
+-----
+    
+# to check if the tool chain is armel or armhf	(https://blogs.oracle.com/jtc/entry/is_it_armhf_or_armel)
+readelf -A /proc/self/exe | grep Tag_ABI_VFP_args
+
+# util for checking the compiler
+gcc -dumpmachine    
