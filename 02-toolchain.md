@@ -1,4 +1,4 @@
-# Toolchain setup for the cross compiling
+# Toolchain setup for cross-compiling
 
 Tool chain setup for armhf (hardware floating point support)
 
@@ -27,8 +27,8 @@ Or if you have added already the path in .bashrc
 
     ~$ export CC=arm-linux-gnueabihf-
 
-Test:
-    
+Test
+
     ~$ ${CC}gcc --version
     arm-linux-gnueabihf-gcc (crosstool-NG linaro-1.13.1-4.9-2014.09 - Linaro GCC 4.9-2014.09) 4.9.2 20140904 (prerelease)
     Copyright (C) 2014 Free Software Foundation, Inc.
@@ -78,12 +78,11 @@ Compile a hello world
     
 ## To test
 
-# to check if the tool chain is armel or armhf
-
+When you are not sure if the elf was compiled with an armel or armhf toolchain you can test it as next:
 (https://blogs.oracle.com/jtc/entry/is_it_armhf_or_armel)
     
     readelf -A /proc/self/exe | grep Tag_ABI_VFP_args
 
-# util for checking the compiler
+For checking the compiler
 
     gcc -dumpmachine    
