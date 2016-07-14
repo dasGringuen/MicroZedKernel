@@ -20,11 +20,14 @@ In debian or ubuntu install the next packages:
     ~$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
 
 
-Set the compiler
-----------------
+Set the compiler and add variables
+---------------------------------
 
         export CC=arm-linux-gnueabihf- 
-		
+        export CROSS_COMPILE=${CC}
+        export LOADADDR=0x10008000
+        export ARCH=arm
+	
 		check that is the linaro:
 		    ~$ ${CC}gcc --version
 
@@ -32,35 +35,29 @@ Get the config file:
 
     This file contains the linux configuration. Get the default:
     
-		~/linux-xlnx$ make ARCH=arm CROSS_COMPILE=${CC} xilinx_zynq_defconfig
+		~/linux-xlnx$ make xilinx_zynq_defconfig
 		
     Configure the kernel (works with the default configuration)
-		~/linux-xlnx$ make ARCH=arm CROSS_COMPILE=${CC} menuconfig
+		~/linux-xlnx$ make menuconfig
 			
 Device tree
 -----------
 
-    use the device tree in arch/arm/boot/dts/zynq-zed.dts
+    use the device tree in arch/arm/boot/dts/zynq-zed.dts or the one in the examples
 
 ~$ gedit arch/arm/boot/dts/zynq-zed.dts
 
-Change the line:
+Change the line "chosen" parameters as next:
 
-    bootargs = "console=ttyPS0,115200 root=/dev/mmcblk0p2 rw rootfstype=ext4 rootwait earlyprintk";
-
-As next:
-
-    arch/arm/boot/dts/zynq-zed.dts
      	chosen {
-    -		bootargs = "console=ttyPS0,115200 root=/dev/ram rw earlyprintk";
-    +		bootargs = "console=ttyPS0,115200 root=/dev/mmcblk0p2 rw rootfstype=ext4 rootwait earlyprintk";
+     		bootargs = "console=ttyPS0,115200 root=/dev/mmcblk0p2 rw rootfstype=ext4 rootwait earlyprintk";
      		linux,stdout-path = "/amba/serial@e0001000";
      	};
 
 
 Compile it:
 
-./scripts/dtc/dtc -I dts -O dtb -o devicetree.dtb arch/arm/boot/dts/zynq-zed.dts 
+dtc -I dts -O dtb -o devicetree.dtb arch/arm/boot/dts/zynq-zed.dts 
 
 To add new perhiperals edit the next file:
 
@@ -72,20 +69,29 @@ arch/arm/boot/dts/zynq-7000.dtsi
     
     jx core counts of your processor in this case 4 cores modifiy as need
 
-make ARCH=arm CROSS_COMPILE=${CC} menuconfig
-make ARCH=arm CROSS_COMPILE=${CC} uImage LOADADDR=0x10008000 -j4
-make ARCH=arm CROSS_COMPILE=${CC} modules -j4
+~$ make menuconfig
+~$ make uImage -j4
+~$ make modules -j4
+~$ make modules_install INSTALL_MOD_PATH=./modules 
 
 To clean:
 
-make ARCH=arm CROSS_COMPILE=${CC} clean
+make clean
 
 
-    rootfs (skip if you have an sd card running):
+    rootfs 
     =======
     
-wget -c https://rcn-ee.net/deb/minfs/jessie/debian-jessie-minimal-armhf-2014-11-10.tar.xz
-sudo tar xfvp ./*-*-*-armhf-*/armhf-rootfs-*.tar -C /media/rootfs/
+If you have an SD card with a running system the next must be updated:
+    -   uImage
+    -   devicetree.dtb
+    -   modules
+    -   BOOT.img (optional)
+    
+You can also update the Debian partition with the following:    
+
+~$ wget -c https://rcn-ee.com/rootfs/eewiki/barefs/debian-8.5-bare-armhf-2016-06-06.tar.xz    
+~$ sudo tar xfvp ./*-*-*-armhf-*/armhf-rootfs-*.tar -C /media/rootfs/
 
 
     Install
@@ -102,11 +108,6 @@ In this case, the partition were mounted in /media/usb0 and /media/usb1
     
 ~$ export BOOT=/media/BOOT; export ROOTFS=/media/rootfs; 
 
-Optional do a backup first:
-
-~$ cp -v $BOOT/uImage $BOOT/backup.$(date "+%y%m%d").uImage
-~$ cp -v $BOOT/devicetree.dtb $BOOT/backup.$(date "+%y%m%d").devicetree.dtb
-
 copy the files:
 
 ~$ cd linux-xlnx
@@ -116,7 +117,7 @@ copy the files:
 In order to write in the rootfs we need to have root rights, and the ROOTFS variable was exported for the user.
 We write an script or just hardcoding the path to rootfs as next.
 
-~$ sudo make ARCH=arm modules_install INSTALL_MOD_PATH=$ROOTFS
+~$ sudo make modules_install INSTALL_MOD_PATH=$ROOTFS
 
 unmount:
 
@@ -161,15 +162,11 @@ uZed$ echo "/dev/mmcblk0p1 /media/ZYNQ auto noatime 1 2" >> /etc/fstab
 
 Assuming that "boot" was mounted in /media/ZYNQ in the MicroZedboard debian and the ip of the board is 192.168.1.103
 
-Optional, create a backup first:
-
-~$ ssh root@192.168.1.103 'mv /media/ZYNQ/uImage /media/ZYNQ/backup.$(date "+%y%m%d").uImage'
-~$ ssh root@192.168.1.103 'mv /media/ZYNQ/devicetree.dtb /media/ZYNQ/backup.$(date "+%y%m%d").deviceTree'
-
 Copy the uImage and the device tree.
 
 ~$ scp -p arch/arm/boot/uImage root@192.168.1.103:/media/ZYNQ/
 ~$ scp -p devicetree.dtb root@192.168.1.103:/media/ZYNQ/
+~$ rsync -avc modules/lib/. root@192.168.1.103:/lib/.
 
 Reboot the board
 

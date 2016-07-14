@@ -3,6 +3,18 @@ MicroZedKernel
 
 Microzed board kernel compile and modules
 
+For the last version use:
+    
+    /prebuild/3.19
+    
+    This version has the following activated:
+    
+        amp:    no
+        ic2:    yes
+        uart0:  yes
+        usb:    yes. Not tested
+    
+
 Tutorials
 =========
 
