@@ -1,4 +1,4 @@
-version for the class
+Standart Version
 
     amp:    no
     ic2:    yes
