@@ -5,7 +5,9 @@
     *   Linaro toolchain installed
     *   Zybo with Linux running
     *   In Debian follow the next guide:
-            [Setup Tool chain in debian](02-toolchain.md)
+
+[Setup Tool chain in debian](02-toolchain.md)
+
     *   In Ubuntu install the next packages:
     
 ```sh
