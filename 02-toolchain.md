@@ -40,10 +40,6 @@ Test
     This is free software; see the source for copying conditions.  There is NO
     warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
 
-To export it permanently
-  
-    ~$ echo "export PATH=~/toolchains/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH" >> ~/.bashrc
-
 
 ## Cross-compile and run it
 
