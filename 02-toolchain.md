@@ -1,4 +1,4 @@
-# Toolchain setup for cross-compiling
+# Toolchain setup for cross-compiling in Debian Jessie
 
 Tool chain setup for armhf (hardware floating point support)
 
@@ -6,38 +6,6 @@ Tool chain setup for armhf (hardware floating point support)
 
 https://wiki.debian.org/ArmHardFloatPort
 
-## Install Toolchain from Linaro
-
-In debian or Ubuntu install the next packages:
-
-    ~$ sudo dpkg --add-architecture i386
-    ~$ sudo apt-get update 
-    ~$ sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
-
-Download/Extract:
-
-    ~$ cd
-    ~$ mkdir toolchains
-    ~$ cd toolchains
-    ~$ wget -c https://releases.linaro.org/14.09/components/toolchain/binaries/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.xz
-    ~$ tar xf gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux.tar.xz
-    ~$ export CC=~/toolchains/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin/arm-linux-gnueabihf-
-    
-Or if you have added already the path in .bashrc
-
-    ~$ export CC=arm-linux-gnueabihf-
-
-Test
-
-    ~$ ${CC}gcc --version
-    arm-linux-gnueabihf-gcc (crosstool-NG linaro-1.13.1-4.9-2014.09 - Linaro GCC 4.9-2014.09) 4.9.2 20140904 (prerelease)
-    Copyright (C) 2014 Free Software Foundation, Inc.
-    This is free software; see the source for copying conditions.  There is NO
-    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
-
-To export it permanently
-  
-    ~$ echo "export PATH=~/toolchains/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH" >> ~/.bashrc
 
 ## Install Toolchain from the repositories
 
@@ -57,7 +25,21 @@ Then install crossbuild-essential-armhf
     sudo dpkg --add-architecture armhf
     sudo apt-get update
     sudo apt-get install crossbuild-essential-armhf
+
+    sudo dpkg --add-architecture i386
+    sudo apt-get update
+    sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
+    sudo apt-get install u-boot-tools    
     
+
+Test
+
+    ~$ ${CC}gcc --version
+    arm-linux-gnueabihf-gcc (crosstool-NG linaro-1.13.1-4.9-2014.09 - Linaro GCC 4.9-2014.09) 4.9.2 20140904 (prerelease)
+    Copyright (C) 2014 Free Software Foundation, Inc.
+    This is free software; see the source for copying conditions.  There is NO
+    warranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.
+
 
 ## Cross-compile and run it
 
