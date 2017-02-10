@@ -1,13 +1,13 @@
 # Guide How to compile and install the Xilinx kernel with a linaro armhf toolchain in the Zybo board
     Adrian Remonda 2016
 
-
 # Prerequisites
     *   Linaro toolchain installed
     *   Zybo with Linux running
     *   In Debian follow the next guide:
             [Setup Tool chain in debian](02-toolchain.md)
     *   In Ubuntu install the next packages:
+    
 ```sh
         sudo apt-get install -y device-tree-compiler lzma lzop u-boot-tools 
         sudo apt-get install -y gcc-arm-linux-gnueabihf
