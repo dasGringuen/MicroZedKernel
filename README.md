@@ -1,58 +1,45 @@
-MicroZedKernel
-==============
+# MicroZed and Zybo Kernel
 
-Microzed board kernel compile and modules
+Microzed and Zybo kernel compiling guide
 
-For the last version use:
-    
-    /prebuild/3.19
-    
-    This version has the following activated:
-    
-        amp:    no
-        ic2:    yes
-        uart0:  yes
-        usb:    yes. Not tested
-    
 
-Tutorials
-=========
+### Zybo kernel tutorial
 
-Kernel sources
---------------
+[Zybo kernel tutorial] (03-linux-kernel.zybo.md)
+
+### MicroZed Linux kernel
+
+#### Get Kernel sources
 
 How to get the kernel sources for the Microzedboard
-  01-Get_the_kernel_sources.txt
+[kernel sources] (01-Get_the_kernel_sources.txt)
 
+#### Compile kernel
 
-Debian
-------
-
-  How to setup and run Debian in the MicroZedboard:  
-
-  02-setup_SD_card.txt
-  
-Linux kernel
-------------
-  
 How to compile and install the Linux kernel in the MicroZedBoard  
 
-  03-linux-kernel.txt
+[Linux Kernel] (03-linux-kernel.txt)
+
+### Setup Debian
+
+How to setup and run Debian in the MicroZedboard:  
+
+[Setup SD card] (01-setup_SD_card.txt)
   
-Hello world module
--------------------
+### Hello world module
 
 Compile and run a Hello world module
 
-  10-Hello_world_tutorial.txt
-  
-Sources and binaries
-====================
+[Hello world module tutorial] (10-Hello_world_tutorial.txt)
+    
+### Sources and binaries
 
 Prebuild images of the bootloader, linux kernel and the device tree
-
-  /prebuild
+```sh
+/prebuild
+```
   
 Sources files
-
-  /src
+```sh
+/src
+```
