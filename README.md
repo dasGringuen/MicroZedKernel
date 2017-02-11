@@ -12,6 +12,7 @@ Microzed and Zybo kernel compiling guide
 #### Get Kernel sources
 
 How to get the kernel sources for the Microzedboard
+
 [kernel sources] (01-Get_the_kernel_sources.txt)
 
 #### Compile kernel
