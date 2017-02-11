@@ -28,7 +28,7 @@
 ```sh
 ~$ . ./export_me.sh
 ```    
--	To check the that the compiler was setup correctly:
+To check the that the compiler was setup correctly:
 
 ```sh   
 ~$ ${CC}gcc --version
@@ -50,8 +50,9 @@ Configure the kernel (works with the default configuration)
 
 Use the device tree in arch/arm/boot/dts/zynq-zed.dts or the one in the examples
 
+```sh
 ~$ gedit arch/arm/boot/dts/zynq-7000.dts
-
+```
 Change the line "chosen" parameters as next:
 ```sh
 chosen {
@@ -68,10 +69,10 @@ arch/arm/boot/dts/zynq-7000.dtsi
 ### Compile kernel modules and device tree
 
 ```sh
-make zynq-zybo.dtb
-make uImage -j4
-make modules -j4
-make modules_install INSTALL_MOD_PATH=./modules
+~$ make zynq-zybo.dtb
+~$ make uImage -j4
+~$ make modules -j4
+~$ make modules_install INSTALL_MOD_PATH=./modules
 ```
 
 
@@ -79,40 +80,45 @@ make modules_install INSTALL_MOD_PATH=./modules
 
 ### Install remotely over SSH
 ```sh
-scp arch/arm/boot/dts/zynq-zybo.dtb root@${ip}:${boot}/devicetree.dtb
-scp arch/arm/boot/uImage root@$ip:${boot}
-ssh root@$ip 'unlock'
-rsync -avc modules/lib/. root@$ip:/lib/. && ssh root@$ip 'sync'
+~$ scp arch/arm/boot/dts/zynq-zybo.dtb root@${ip}:${boot}/devicetree.dtb
+~$ scp arch/arm/boot/uImage root@$ip:${boot}
+~$ ssh root@$ip 'unlock'
+~$ rsync -avc modules/lib/. root@$ip:/lib/. && ssh root@$ip 'sync'
 ```   
     
 ### Local with an SD card reader
 
 ```sh
-cp -v arch/arm/boot/dts/zynb-zybo.dtb /media/$USER/BOOT/devicetree.dtb
-cp -v arch/arm/boot/uImage /media/$USER/BOOT
-sudo rsync -avc modules/lib/. /media/$USER/rootfs/lib/.
-sync
+~$ cp -v arch/arm/boot/dts/zynb-zybo.dtb /media/$USER/BOOT/devicetree.dtb
+~$ cp -v arch/arm/boot/uImage /media/$USER/BOOT
+~$ sudo rsync -avc modules/lib/. /media/$USER/rootfs/lib/.
+~$ sync
 
 ```   
 
 ### After the first boot
 
 At the first access to the board command line update the module dependencies by typing this command:
+```sh
 ~# depmod -a
-
+```
 
 ## Misc
 		
 ### How to Create parches
+```sh
 ~$ git commit
 
 ~$ git format-patch -1 -o ../patches/		
+```
 
 ### Apply patches
+```sh
 ~$ patch -p1 < ../patches/ check patches
+```
 
 ## TODO 
 
-- Increase ram to 1G (0x40000000) arch/arm/boot/dts/zynq-zed.dts
+* Increase ram to 1G (0x40000000) arch/arm/boot/dts/zynq-zed.dts
 
 
