@@ -1,22 +1,19 @@
 # Guide How to compile and install the Xilinx kernel with a linaro armhf toolchain in the Zybo board
     Adrian Remonda 2016
 
-# Prerequisites
+## Prerequisites
 
 *   Linaro toolchain installed
 *   Zybo with Linux running
-*   In Debian follow the next guide:
-
-[Setup Tool chain in debian](02-toolchain.md)
-
-*   In Ubuntu install the next packages:
+*   If using Debian setup the tool chain as next [ Setup Toolchain in debian] (02-toolchain.md)
+*   If using Ubuntu install the next packages:
     
 ```sh
         sudo apt-get install -y device-tree-compiler lzma lzop u-boot-tools 
         sudo apt-get install -y gcc-arm-linux-gnueabihf
 ```
 
-# Download kernel sources
+## Download kernel sources
 
 ```sh
     LINUX_TAG=xilinx-v2016.4
@@ -27,8 +24,7 @@
 
 ```
 
-Set the compiler and add variables
-------
+### Set the compiler and add variables
 ```sh
     ~$ . ./export_me.sh
 ```    
@@ -39,20 +35,18 @@ Set the compiler and add variables
 	~$ ${CC}gcc --version
 ```    
 
-Get the config file
-----
+### Get the config file
 
     This file contains the linux configuration. Get the default:
 ```sh    
 		~/linux-xlnx$ make xilinx_zynq_defconfig
 ```		
-    Configure the kernel (works with the default configuration)
+Configure the kernel (works with the default configuration)
 ```sh
 		~/linux-xlnx$ make menuconfig
 ```
 			
-Device tree
------------
+### Device tree
 
     use the device tree in arch/arm/boot/dts/zynq-zed.dts or the one in the examples
 
@@ -70,15 +64,13 @@ If needed, modify the file arch/arm/boot/dts/zynq-zybo.dts
 To add new perhiperals edit the next file:
 
 arch/arm/boot/dts/zynq-7000.dtsi
-	        
+       
+
+## Compile
 
 
-# Compile
 
-
-
-Make the kernel modules and device tree:
----
+### Make the kernel modules and device tree:
 
 ```sh
     make zynq-zybo.dtb
@@ -88,11 +80,10 @@ Make the kernel modules and device tree:
 ```
 
 
-# Deploy in the board
+## Deploy in the board
 
 
-Install remotely
-----------------
+### Install remotely over SSH
 ```sh
     scp arch/arm/boot/dts/zynq-zybo.dtb root@${ip}:${boot}/devicetree.dtb
     scp arch/arm/boot/uImage root@$ip:${boot}
@@ -100,8 +91,8 @@ Install remotely
     rsync -avc modules/lib/. root@$ip:/lib/. && ssh root@$ip 'sync'
 ```   
     
-Local with an SD card reader
-------
+### Local with an SD card reader
+
 ```sh
     cp -v arch/arm/boot/dts/zynb-zybo.dtb /media/$USER/BOOT/devicetree.dtb
     cp -v arch/arm/boot/uImage /media/$USER/BOOT
@@ -110,13 +101,13 @@ Local with an SD card reader
 
 ```   
 
-After the first boot
---------------------------
+### After the first boot
+
 At the first access to the board command line update the module dependencies by typing this command:
 ~# depmod -a
 
 
-# Misc
+## Misc
 		
 Create parches
 ---
