@@ -1,0 +1,96 @@
+From b927edadd2306f35b70eb8b50925d65c3fca1e9d Mon Sep 17 00:00:00 2001
+From: Adrian Remonda <adrianremonda@gmail.com>
+Date: Sat, 11 Feb 2017 11:14:11 +0100
+Subject: [PATCH] enable i2c for the zybo
+
+Signed-off-by: Adrian Remonda <adrianremonda@gmail.com>
+---
+ arch/arm/boot/dts/zynq-7000.dtsi |  8 ++++----
+ arch/arm/boot/dts/zynq-zed.dts   |  4 ++++
+ arch/arm/boot/dts/zynq-zybo.dts  | 11 ++++++++++-
+ 3 files changed, 18 insertions(+), 5 deletions(-)
+
+diff --git a/arch/arm/boot/dts/zynq-7000.dtsi b/arch/arm/boot/dts/zynq-7000.dtsi
+index 09bdcc2dd89f..c2f31ae159a4 100644
+--- a/arch/arm/boot/dts/zynq-7000.dtsi
++++ b/arch/arm/boot/dts/zynq-7000.dtsi
+@@ -19,7 +19,7 @@
+ 		#address-cells = <1>;
+ 		#size-cells = <0>;
+ 
+-		cpu0: cpu@0 {
++		cpu@0 {
+ 			compatible = "arm,cortex-a9";
+ 			device_type = "cpu";
+ 			reg = <0>;
+@@ -33,7 +33,7 @@
+ 			>;
+ 		};
+ 
+-		cpu1: cpu@1 {
++		cpu@1 {
+ 			compatible = "arm,cortex-a9";
+ 			device_type = "cpu";
+ 			reg = <1>;
+@@ -99,10 +99,10 @@
+ 		gpio0: gpio@e000a000 {
+ 			compatible = "xlnx,zynq-gpio-1.0";
+ 			#gpio-cells = <2>;
++			#interrupt-cells = <2>;
+ 			clocks = <&clkc 42>;
+ 			gpio-controller;
+ 			interrupt-controller;
+-			#interrupt-cells = <2>;
+ 			interrupt-parent = <&intc>;
+ 			interrupts = <0 20 4>;
+ 			reg = <0xe000a000 0x1000>;
+@@ -286,7 +286,7 @@
+ 		slcr: slcr@f8000000 {
+ 			#address-cells = <1>;
+ 			#size-cells = <1>;
+-			compatible = "xlnx,zynq-slcr", "syscon", "simple-mfd";
++			compatible = "xlnx,zynq-slcr", "syscon", "simple-bus";
+ 			reg = <0xF8000000 0x1000>;
+ 			ranges;
+ 			clkc: clkc@100 {
+diff --git a/arch/arm/boot/dts/zynq-zed.dts b/arch/arm/boot/dts/zynq-zed.dts
+index b8efd507a8ff..c3b6352396d8 100644
+--- a/arch/arm/boot/dts/zynq-zed.dts
++++ b/arch/arm/boot/dts/zynq-zed.dts
+@@ -106,3 +106,7 @@
+ 	dr_mode = "host";
+ 	usb-phy = <&usb_phy0>;
+ };
++
++&i2c0 {
++	status = "okay";
++};
+diff --git a/arch/arm/boot/dts/zynq-zybo.dts b/arch/arm/boot/dts/zynq-zybo.dts
+index 3ca662ab7195..d7516fb3d276 100644
+--- a/arch/arm/boot/dts/zynq-zybo.dts
++++ b/arch/arm/boot/dts/zynq-zybo.dts
+@@ -31,7 +31,7 @@
+ 	};
+ 
+ 	chosen {
+-		bootargs = "";
++		bootargs = "console=ttyPS0,115200 root=/dev/mmcblk0p2 rw rootfstype=ext4 rootwait earlyprintk";
+ 		stdout-path = "serial0:115200n8";
+ 	};
+ 
+@@ -73,3 +73,12 @@
+ 	dr_mode = "host";
+ 	usb-phy = <&usb_phy0>;
+ };
++
++&i2c0 {
++	status = "okay";
++};
++
++&i2c1 {
++	status = "okay";
++};
++
+-- 
+2.1.4
+
