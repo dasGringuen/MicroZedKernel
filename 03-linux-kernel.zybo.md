@@ -1,4 +1,4 @@
-# Guide How to compile and install the Xilinx kernel with a linaro armhf toolchain in the Zybo board
+# Guide How to compile and install the Xilinx Linux Kernel in the Zybo board
     Adrian Remonda 2016
 
 ## Prerequisites
