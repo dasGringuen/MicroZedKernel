@@ -26,7 +26,7 @@
 
 ### Set the compiler and add variables
 ```sh
-~$ . ./export_me.sh
+~$ . ./export_me_xilinx_kernel.sh
 ```    
 To check the that the compiler was setup correctly:
 
@@ -48,10 +48,10 @@ Configure the kernel (works with the default configuration)
 			
 ### Device tree
 
-Use the device tree in arch/arm/boot/dts/zynq-zed.dts or the one in the examples
+Copy the device tree from <thi repo>/zybo/zynq-zybo.dts to <kernel>/arch/arm/boot/dts/zynq-zed.dts 
 
 ```sh
-~$ gedit arch/arm/boot/dts/zynq-7000.dts
+~$ gedit arch/arm/boot/dts/zynq-zybo.dts
 ```
 Change the line "chosen" parameters as next:
 ```sh
@@ -61,7 +61,6 @@ chosen {
 };
 ```
 
-If needed, modify the file arch/arm/boot/dts/zynq-zybo.dts
 To add new perhiperals edit the next file:
 
 arch/arm/boot/dts/zynq-7000.dtsi
