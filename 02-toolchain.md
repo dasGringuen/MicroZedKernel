@@ -29,8 +29,14 @@ Then install crossbuild-essential-armhf
     sudo dpkg --add-architecture i386
     sudo apt-get update
     sudo apt-get install libc6:i386 libncurses5:i386 libstdc++6:i386 zlib1g:i386 
-    sudo apt-get install u-boot-tools    
-    
+    sudo apt-get install u-boot-tools  
+
+And install crossbuild-essential-aarch64(for ultraZed)
+
+    sudo dpkg --add-architecture arm64
+    sudo apt-get update
+    sudo apt-get install crossbuild-essential-arm64
+
 
 Test
 
