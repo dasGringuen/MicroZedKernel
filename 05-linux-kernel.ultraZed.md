@@ -34,11 +34,20 @@ This file contains the linux configuration. Get the default
 
 ```sh    
 ~$ make xilinx_zynqmp_defconfig
-```		
-Configure the kernel (works with the default configuration)
+```	
+Configure the kernel 
 ```sh
 ~$ make menuconfig
 ```
+	to configure OpenAMP ensure that the following module is enabled:
+		Device Driver
+		|
+		---> Remoteproc drivers
+			|
+			--->ZynqMP_r5 remoteproc support
+	additional the Rpmsg driver is needed. If the drivers are enabled in kernel configuration an error gets obtained at brunch 2017.1. To still get the module compiled the rpmsg_user_dev_driver from https://github.com/Xilinx/meta-openamp/blob/rel-v2017.1/recipes-kernel/rpmsg-user-module/files/rpmsg_user_dev_driver.c can get used. The module and a makefile is given in /ultrazed/rpmsg_user_dev_driver.
+	
+
 			
 ### Device tree
 
@@ -63,7 +72,7 @@ To add new perhiperals edit the next file:
 ### Install remotely over SSH
 ```sh
 ~$ scp <repo path>/ultrazed/system.dtb root@${ip}:${boot}/devicetree.dtb
-~$ scp arch/arm/boot/uImage root@$ip:${boot}
+~$ scp arch/arm64/boot/Image root@$ip:${boot}
 ~$ ssh root@$ip 'unlock'
 ~$ rsync -avc modules/lib/. root@$ip:/lib/. && ssh root@$ip 'sync'
 ```   
@@ -72,7 +81,7 @@ To add new perhiperals edit the next file:
 
 ```sh
 ~$ cp -v scp <repo path>/ultrazed/system.dtb /media/$USER/BOOT/devicetree.dtb
-~$ cp -v arch/arm/boot/uImage /media/$USER/BOOT
+~$ cp -v arch/arm64/boot/Image /media/$USER/BOOT
 ~$ sudo rsync -avc modules/lib/. /media/$USER/rootfs/lib/.
 ~$ sync
 
