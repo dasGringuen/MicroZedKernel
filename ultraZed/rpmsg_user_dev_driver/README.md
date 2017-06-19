@@ -4,8 +4,9 @@
 	see 05-linux-kernel.ultraZed.md
 
 ## Setup Makefile
-	line 10:  set IP address of ultraZed	
-	line 12:  set path to kernel dirictory 
+	line 10: set IP address of ultraZed	
+	line 12: set path to kernel dirictory 
+	line 11: set path to module installation dirictory  
 
 ## Setup compiler path in export_me.sh
 	line 2: set path	

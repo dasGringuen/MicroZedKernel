@@ -1,0 +1,31 @@
+#Setup open AMP:
+
+##kernelconfigs:
+
+###Device Drives:
+
+	--->  Remoteproc drivers R5 support
+
+		additional the Rpmsg driver is needed. If the drivers are enabled in kernel configuration an error gets obtained at brunch 2017.1. To still get the module compiled the rpmsg_user_dev_driver from https://github.com/Xilinx/meta-openamp/blob/rel-v2017.1/recipes-kernel/rpmsg-user-module/files/rpmsg_user_dev_driver.c can get used. The module and a makefile is given in /ultrazed/rpmsg_user_dev_driver.
+
+###Setup device tree:
+
+include the openamp-overlay.dtsi (if both processors should be used a additional entry is needed)
+
+##sdk:
+https://www.xilinx.com/support/documentation/sw_manuals/xilinx2017_1/ug1186-zynq-openamp-gsg.pdf
+page 13,14
+
+export genereated .elf to board at lacation /lib/firmware
+
+
+##run echo test
+from https://github.com/Xilinx/meta-openamp copy folder 'meta-openamp/recipes-openamp/rpmsg-examples/rpmsg-echo-test' to target (test application)
+
+on target:
+rpmsg-echo-test/make
+
+echo <your firmware> > /sys/class/remoteproc/remoteproc0/firmware
+echo start > /sys/class/remoteproc/remoteproc0/state
+modprobe rpmsg_user_dev_driver.ko
+./echo_test

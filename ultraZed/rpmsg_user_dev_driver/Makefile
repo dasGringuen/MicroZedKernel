@@ -8,7 +8,7 @@ ifneq ($(KERNELRELEASE),)
 else
 	obj-m := rpmsg_user_dev_driver.o
 	TARGET = 192.168.1.103
-	TARGET_DIR = /root
+	TARGET_DIR = /lib/modules/4.9.0-00037-g5d029fd-dirty/kernel/drivers/rpmsg/
 	KERNELDIR ?= ../../../../linux-xlnx/
 	PWD := $(shell pwd)
 
