@@ -40,7 +40,8 @@ This file contains the linux configuration. Get the default
 ```sh    
 ~$ make xilinx_zynqmp_defconfig
 ```	
-Configure the kernel 
+
+### Configure the kernel 
 ```sh
 ~$ make menuconfig
 ```
@@ -50,8 +51,8 @@ Configure the kernel
 		---> Remoteproc drivers
 			|
 			--->ZynqMP_r5 remoteproc support
-			
-The Rpmsg driver is also needed. If the drivers are enabled in kernel configuration an error gets obtained at brunch 2017.1. To still get the module compiled the rpmsg_user_dev_driver from https://github.com/Xilinx/meta-openamp/blob/rel-v2017.1/recipes-kernel/rpmsg-user-module/files/rpmsg_user_dev_driver.c can get used. The module and a makefile is given in /ultrazed/rpmsg_user_dev_driver.
+	
+Note: The Rpmsg driver is also needed. If the drivers are enabled in kernel configuration an error gets obtained at branch 2017.1. To still get the module compiled the rpmsg_user_dev_driver from https://github.com/Xilinx/meta-openamp/blob/rel-v2017.1/recipes-kernel/rpmsg-user-module/files/rpmsg_user_dev_driver.c can be used. The module and a makefile is given in /ultrazed/rpmsg_user_dev_driver.
 	
 
 			
