@@ -5,7 +5,12 @@
 
 *   Linaro toolchain 64bit installed
 *   ultraZed with Linux running
-*   If using Debian setup the tool chain as next [ Setup Toolchain in debian] (02-toolchain.md)
+*	arm 64bit compiler:
+	*   If using Debian or Ubuntu setup the tool chain as next [ Setup Toolchain in debian] (02-toolchain.md)
+	or
+	*	Direclty Linaro toolchain 64bit
+
+Note: with Debian Jessie the Kernel doesn't copile, test with Debian Stretch
 
 ## Download kernel sources
 
