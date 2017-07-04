@@ -5,7 +5,12 @@
 
 *   Linaro toolchain 64bit installed
 *   ultraZed with Linux running
-*   If using Debian setup the tool chain as next [ Setup Toolchain in debian] (02-toolchain.md)
+*	arm 64bit compiler:
+	*   If using Debian or Ubuntu setup the tool chain as next [ Setup Toolchain in debian] (02-toolchain.md)
+	or
+	*   Directly Linaro toolchain 64bit
+
+Note: with Debian Jessie the Kernel doesn't compile, test with Debian Stretch
 
 ## Download kernel sources
 
@@ -35,7 +40,8 @@ This file contains the linux configuration. Get the default
 ```sh    
 ~$ make xilinx_zynqmp_defconfig
 ```	
-Configure the kernel 
+
+### Configure the kernel 
 ```sh
 ~$ make menuconfig
 ```
@@ -45,7 +51,8 @@ Configure the kernel
 		---> Remoteproc drivers
 			|
 			--->ZynqMP_r5 remoteproc support
-	additional the Rpmsg driver is needed. If the drivers are enabled in kernel configuration an error gets obtained at brunch 2017.1. To still get the module compiled the rpmsg_user_dev_driver from https://github.com/Xilinx/meta-openamp/blob/rel-v2017.1/recipes-kernel/rpmsg-user-module/files/rpmsg_user_dev_driver.c can get used. The module and a makefile is given in /ultrazed/rpmsg_user_dev_driver.
+	
+Note: The Rpmsg driver is also needed. If the drivers are enabled in kernel configuration an error gets obtained at branch 2017.1. To still get the module compiled the rpmsg_user_dev_driver from https://github.com/Xilinx/meta-openamp/blob/rel-v2017.1/recipes-kernel/rpmsg-user-module/files/rpmsg_user_dev_driver.c can be used. The module and a makefile is given in /ultrazed/rpmsg_user_dev_driver.
 	
 
 			

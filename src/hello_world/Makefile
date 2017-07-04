@@ -6,19 +6,17 @@ ifneq ($(KERNELRELEASE),)
 	CFLAGS_hello.o := -DDEBUG
 else
 	obj-m := hello.o
-	TARGET = 192.168.1.103
-	TARGET_DIR = /root
-	KERNELDIR ?= ~/src/zynq/kernel/linux-xlnx
+	TARGET_DIR = /lib/modules/$(KERNEL_VERSION)/kernel/drivers/rpmsg/
 	PWD := $(shell pwd)
 
 default:
-	$(MAKE) ARCH=arm CROSS_COMPILE=$(CC) -C $(KERNELDIR) M=$(PWD) modules
+	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules
 
 clean:
-	$(MAKE) ARCH=arm CROSS_COMPILE=$(CC) -C $(KERNELDIR) M=$(PWD) clean
+	$(MAKE) -C $(KERNELDIR) M=$(PWD) clean
 
 install:        
-	scp *.ko root@$(TARGET):$(TARGET_DIR)
+	scp *.ko root@$(ip):$(TARGET_DIR)
 
 endif
 
