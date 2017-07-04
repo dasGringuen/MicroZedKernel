@@ -51,12 +51,10 @@ Configure the kernel
 			
 ### Device tree
 
-use the device tree source file provided in /ultrZed and build it with the build_dts.sh script
+use the device tree source file provided in /ultrZed/device_tree and build it with the build_dts.sh script
 
 
-To add new perhiperals edit the next file:
 
-/ultraZed/petalinux_20171.dts
        
 ### Compile kernel modules and device tree
 
