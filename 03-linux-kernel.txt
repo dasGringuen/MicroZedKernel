@@ -75,6 +75,7 @@ arch/arm/boot/dts/zynq-7000.dtsi
 ~$ make uImage -j4
 ~$ make modules -j4
 ~$ make modules_install INSTALL_MOD_PATH=./modules 
+~$ tar -cf modules.tar -C modules .	
 
 To clean:
 
@@ -143,8 +144,6 @@ Module                  Size  Used by
 ipv6                  253614  12 
 
 
-
-
     Install over ssh
     =================
 
@@ -185,3 +184,13 @@ Example of coping the driver "drivers/remoteproc/zynq_remoteproc.ko"
 Copy zynq_remoteproc.ko in the path /lib/modules, x.y.z is the version of the kernel, in our case: 3.15.0-xilinx-00001-gc95b0382a8dc
 
 scp drivers/remoteproc/zynq_remoteproc.ko root@192.168.1.101:/lib/modules/x.y.z/kernel/drivers/remoteproc/zynq_remoteproc.ko 
+
+    To update a precompiled kernel 
+    =============================
+
+- Copy the kernel in the boot partition
+- copy the modules .tar created when compiled the kenrel into the rootfs and do the folowing in the target:
+
+~# cd /
+~# tar -xf modules.tar
+~# depmod -e
